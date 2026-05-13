@@ -1,4 +1,4 @@
-export type WeaponCategory = 'AR' | 'DMR' | 'SR' | 'SMG' | 'LMG' | 'Shotgun' | 'Pistol' | 'Melee' | 'Other';
+export type WeaponCategory = 'AR' | 'SR' | 'DMR' | 'SMG' | 'LMG' | 'Shotgun' | 'Pistol' | 'Melee' | 'Other';
 
 export interface WeaponStats {
   damage: number;

@@ -46,6 +46,7 @@ export default function WeaponDetail({ weapon, onClose }: WeaponDetailProps) {
                 <img 
                   src={weapon.image} 
                   alt={weapon.name}
+                  referrerPolicy="no-referrer"
                   className="max-w-full max-h-64 object-contain filter drop-shadow-[0_0_30px_rgba(255,165,0,0.2)]"
                 />
               </div>

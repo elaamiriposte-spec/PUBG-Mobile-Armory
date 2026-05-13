@@ -11,7 +11,7 @@ import WeaponDetail from './components/WeaponDetail';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, ShieldAlert } from 'lucide-react';
 
-const CATEGORIES: (WeaponCategory | 'All')[] = ['All', 'AR', 'SR', 'DMR', 'SMG', 'LMG', 'Shotgun'];
+const CATEGORIES: (WeaponCategory | 'All')[] = ['All', 'AR', 'SR', 'DMR', 'SMG', 'LMG', 'Shotgun', 'Pistol', 'Melee', 'Other'];
 
 export default function App() {
   const [selectedWeapon, setSelectedWeapon] = useState<Weapon | null>(null);
@@ -119,6 +119,8 @@ function getCategoryFullname(cat: string): string {
     'SMG': 'Submachine Guns',
     'LMG': 'Light Machine Guns',
     'Shotgun': 'Shotguns',
+    'Pistol': 'Pistols',
+    'Melee': 'Melee Weapons',
     'All': 'Full Arsenal'
   };
   return names[cat] || cat;

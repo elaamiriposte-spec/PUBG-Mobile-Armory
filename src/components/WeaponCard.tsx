@@ -14,7 +14,7 @@ interface WeaponCardProps {
   onClick: (weapon: Weapon) => void;
 }
 
-export default function WeaponCard({ weapon, onClick }: WeaponCardProps) {
+export const WeaponCard: React.FC<WeaponCardProps> = ({ weapon, onClick }) => {
   return (
     <motion.div
       layoutId={`weapon-${weapon.id}`}
@@ -35,6 +35,7 @@ export default function WeaponCard({ weapon, onClick }: WeaponCardProps) {
         <motion.img 
           src={weapon.image} 
           alt={weapon.name} 
+          referrerPolicy="no-referrer"
           className="max-w-full max-h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,165,0,0.1)] group-hover:scale-110 transition-transform"
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://via.placeholder.com/200?text=Weapon';
@@ -57,6 +58,8 @@ export default function WeaponCard({ weapon, onClick }: WeaponCardProps) {
     </motion.div>
   );
 }
+
+export default WeaponCard;
 
 function StatBar({ label, value, max }: { label: string, value: number, max: number }) {
   const percentage = (value / max) * 100;
