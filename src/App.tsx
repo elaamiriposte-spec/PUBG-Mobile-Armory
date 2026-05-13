@@ -17,15 +17,22 @@ export default function App() {
   const [selectedWeapon, setSelectedWeapon] = useState<Weapon | null>(null);
   const [activeCategory, setActiveCategory] = useState<WeaponCategory | 'All'>('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'name' | 'damage'>('name');
 
   const filteredWeapons = useMemo(() => {
-    return weapons.filter(w => {
+    const result = weapons.filter(w => {
       const matchesCategory = activeCategory === 'All' || w.category === activeCategory;
       const matchesSearch = w.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             w.category.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchTerm]);
+
+    if (sortBy === 'damage') {
+      return [...result].sort((a, b) => b.stats.damage - a.stats.damage);
+    }
+
+    return result;
+  }, [activeCategory, searchTerm, sortBy]);
 
   return (
     <div className="min-h-screen font-sans selection:bg-yellow-500/30">
@@ -64,8 +71,8 @@ export default function App() {
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col gap-6">
-          <div className="flex items-center justify-between">
-            <div className="relative group flex-1 max-w-md">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="relative group flex-1 max-w-md w-full">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-yellow-500 transition-colors" size={18} />
               <input 
                 type="text" 
@@ -75,10 +82,32 @@ export default function App() {
                 className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm font-mono focus:outline-none focus:border-yellow-500/50 transition-all"
               />
             </div>
-            <div className="hidden sm:block text-right">
-              <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
-                Matches: {filteredWeapons.length}
-              </span>
+            
+            <div className="flex items-center gap-4 w-full sm:w-auto overflow-x-auto sm:overflow-visible pb-2 sm:pb-0">
+              <div className="flex bg-white/5 rounded-xl p-1 border border-white/10">
+                <button
+                  onClick={() => setSortBy('name')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
+                    sortBy === 'name' ? 'bg-yellow-500 text-black' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Name
+                </button>
+                <button
+                  onClick={() => setSortBy('damage')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
+                    sortBy === 'damage' ? 'bg-yellow-500 text-black' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Damage
+                </button>
+              </div>
+
+              <div className="hidden md:block text-right whitespace-nowrap">
+                <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
+                  Assets: {filteredWeapons.length}
+                </span>
+              </div>
             </div>
           </div>
 
